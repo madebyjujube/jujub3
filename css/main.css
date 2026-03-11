@@ -1,3 +1,13 @@
+._construction {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+  color: #FF0;
+  text-shadow: 3px 3px 3px #000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -16,6 +26,9 @@ iframe {
 }
 img {
   pointer-events: none;
+}
+p {
+  text-indent: 3em;
 }
 a {
   color: #FF0;
@@ -88,9 +101,8 @@ h1 {
   background: rgb(240, 240, 240);
   border-radius: 12px;
 }
-.navbutton > p {
+.navbuttonText {
   text-align: center;
-  /* margin-top: 80px; */
 }
 .navbutton > img {
   position:static;
@@ -205,4 +217,221 @@ h1 {
   bottom: 8px;
   right: 8px;
   cursor: se-resize;
+}
+
+/* ==========================================
+   P5.JS DRAWING BOARD STYLES
+   ========================================== */
+
+/* UI Container (top right buttons) */
+.ui-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+/* Button Base Styles */
+.btn-send,
+.btn-clear {
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Helvetica", sans-serif;
+    font-weight: bold;
+    border: none;
+    font-size: 14px;
+}
+
+/* Send Button */
+.btn-send {
+    background: #FF0;
+}
+
+.btn-send:hover {
+    background: #DD0;
+}
+
+/* Clear Button */
+.btn-clear {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.btn-clear:hover {
+    background: #f0f0f0;
+}
+
+/* ==========================================
+   MODAL STYLES
+   ========================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin: 0 0 20px 0;
+    font-size: 24px;
+}
+
+.modal-content p {
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 15px 0;
+}
+
+/* Drawing Preview */
+.drawing-preview {
+    width: 200px;
+    height: auto;
+    max-height: 150px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: contain;
+}
+
+/* Message Input */
+.message-input {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: "Helvetica", sans-serif;
+    resize: none;
+    box-sizing: border-box;
+}
+
+/* Modal Buttons Container */
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Modal Action Buttons */
+.btn-download,
+.btn-email {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-download {
+    background: #A6F;
+    color: white;
+}
+
+.btn-download:hover {
+    background: #95E;
+}
+
+.btn-email {
+    background: #FF0;
+}
+
+.btn-email:hover {
+    background: #DD0;
+}
+
+/* Close Button (X) */
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.btn-close:hover {
+    color: #666;
+}
+
+/* ==========================================
+   EMAIL POPUP STYLES
+   ========================================== */
+
+.email-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FF0;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 10000;
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+    min-width: 250px;
+}
+
+.email-popup p {
+    margin: 0 0 15px 0;
+    font-weight: bold;
+}
+
+.popup-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: "Helvetica", sans-serif;
+}
+
+.popup-btn:hover {
+    background: #f0f0f0;
+}
+
+.btn-cancel {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: "Helvetica", sans-serif;
+}
+
+.btn-cancel:hover {
+    color: #666;
 }
