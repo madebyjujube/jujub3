@@ -1,12 +1,23 @@
 // ==========================================
-// P5.JS DRAWING BOARD WITH SAVE & EMAIL
+// P5.JS DRAWING BOARD WITH SAVE & EMAIL + MULTI-UNDO
 // ==========================================
 
 let buffer;
 let canvas;
 let isDrawing = false;
 let bufferReady = false;
-let lastX, lastY; // Manual tracking of last mouse position
+let lastX, lastY;
+
+// UNDO SYSTEM
+let history = [];
+const MAX_HISTORY = 20;
+let isUndoing = false;
+let lastUndoTime = 0;
+const UNDO_COOLDOWN = 150;
+
+// Track modifier key states
+let metaKeyDown = false;
+let ctrlKeyDown = false;
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight);
@@ -16,6 +27,45 @@ function setup() {
     createUI();
     
     noLoop();
+    
+    // Set up global key handler for undo
+    setupUndoKeyHandler();
+}
+
+function setupUndoKeyHandler() {
+    // Track when Meta/Ctrl are pressed/released
+    window.addEventListener('keydown', function(e) {
+        
+        if (e.key === 'Meta' || e.code === 'MetaLeft' || e.code === 'MetaRight') {
+            metaKeyDown = true;
+        }
+        if (e.key === 'Control' || e.code === 'ControlLeft' || e.code === 'ControlRight') {
+            ctrlKeyDown = true;
+        }
+        
+        // Check for Z while meta/ctrl is held
+        if ((e.key === 'z' || e.key === 'Z') && (metaKeyDown || ctrlKeyDown || e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            let now = Date.now();
+            if (now - lastUndoTime >= UNDO_COOLDOWN) {
+                lastUndoTime = now;
+                undo();
+            }
+            return false;
+        }
+    }, true);
+    
+    window.addEventListener('keyup', function(e) {
+        
+        if (e.key === 'Meta' || e.code === 'MetaLeft' || e.code === 'MetaRight') {
+            metaKeyDown = false;
+        }
+        if (e.key === 'Control' || e.code === 'ControlLeft' || e.code === 'ControlRight') {
+            ctrlKeyDown = false;
+        }
+    }, true);
 }
 
 function createBuffer() {
@@ -26,20 +76,53 @@ function createBuffer() {
     bufferReady = true;
 }
 
+function saveToHistory() {
+    if (!bufferReady || !buffer) return;
+    if (isUndoing) return;
+    
+    let snapshot = buffer.get();
+    history.push(snapshot);
+    
+    if (history.length > MAX_HISTORY) {
+        history.shift();
+    }
+}
+
+function undo() {
+    if (history.length === 0) {
+        return;
+    }
+    
+    isUndoing = true;
+    
+    let previousState = history.pop();
+    
+    buffer.background(222);
+    buffer.image(previousState, 0, 0);
+    
+    redraw();
+    
+    setTimeout(() => {
+        isUndoing = false;
+    }, 50);
+}
+
 function draw() {
     if (!bufferReady || !buffer) return;
     image(buffer, 0, 0, width, height);
 }
 
-// ==========================================
-// DRAWING LOGIC (Fixed with manual position tracking)
-// ==========================================
-
 function mousePressed() {
     if (!bufferReady) return;
-    isDrawing = true;
+    if (isUndoing) return;
     
-    // Draw initial point and set last position
+    if (event && event.target && event.target.closest('.ui-container')) {
+        return;
+    }
+    
+    saveToHistory();
+    
+    isDrawing = true;
     lastX = mouseX;
     lastY = mouseY;
     
@@ -59,14 +142,12 @@ function mouseReleased() {
 function mouseDragged() {
     if (!bufferReady || !isDrawing) return false;
     
-    // Only draw if we have a valid last position
     if (lastX !== null && lastY !== null) {
         buffer.stroke(0);
         buffer.strokeWeight(3);
         buffer.line(lastX, lastY, mouseX, mouseY);
     }
     
-    // Update last position for next frame
     lastX = mouseX;
     lastY = mouseY;
     
@@ -76,15 +157,14 @@ function mouseDragged() {
 
 function keyPressed() {
     if (!bufferReady) return;
+    
+    // Only handle clear here - undo is handled by native listener
     if (key === 'Backspace' || key === 'Delete') {
+        saveToHistory();
         buffer.background(222);
         redraw();
     }
 }
-
-// ==========================================
-// RESIZE HANDLING
-// ==========================================
 
 function windowResized() {
     if (!bufferReady || !buffer) return;
@@ -102,36 +182,43 @@ function windowResized() {
         buffer.image(oldBuffer, 0, 0);
     }
     
+    history = [];
     redraw();
 }
-
-// ==========================================
-// UI CREATION
-// ==========================================
 
 function createUI() {
     let btnContainer = createDiv('');
     btnContainer.addClass('ui-container');
+    btnContainer.style('pointer-events', 'auto');
     
     let sendBtn = createButton('💌 Send Drawing');
     sendBtn.addClass('btn-send');
     sendBtn.parent(btnContainer);
-    sendBtn.mousePressed(showSaveOptions);
+    sendBtn.mousePressed((e) => {
+        if (e) e.stopPropagation();
+        showSaveOptions();
+    });
+    
+    let undoBtn = createButton('↩️ Undo');
+    undoBtn.addClass('btn-undo');
+    undoBtn.parent(btnContainer);
+    undoBtn.mousePressed((e) => {
+        if (e) e.stopPropagation();
+        undo();
+    });
     
     let clearBtn = createButton('🗑 Clear');
     clearBtn.addClass('btn-clear');
     clearBtn.parent(btnContainer);
-    clearBtn.mousePressed(() => {
+    clearBtn.mousePressed((e) => {
+        if (e) e.stopPropagation();
         if (bufferReady && buffer) {
+            saveToHistory();
             buffer.background(222);
             redraw();
         }
     });
 }
-
-// ==========================================
-// SAVE MODAL
-// ==========================================
 
 function showSaveOptions() {
     if (!bufferReady || !buffer) return;

@@ -25,7 +25,7 @@ class WindowManager {
   }
 
   getWindowClass(windowEl) {
-    const classes = ['jujube', 'design', 'intangible', 'purple', 'orange', 'wcontact', 'wwaves'];
+    const classes = ['jujube', 'design', 'intangible', 'about', 'font', 'contact', 'wwaves'];
     return classes.find(c => windowEl.classList.contains(c));
   }
 
@@ -43,7 +43,7 @@ class WindowManager {
     // Setup resizers
     const prefixMap = {
       'jujube': 'ju', 'design': 'de', 'intangible': 'in',
-      'purple': 'ur', 'orange': 'or', 'wcontact': 'co', 'wwaves': 'wa'
+      'about': 'ur', 'font': 'or', 'contact': 'co', 'wwaves': 'wa'
     };
     
     const prefix = prefixMap[windowClass];
@@ -301,11 +301,11 @@ class WindowManager {
 const manager = new WindowManager();
 
 // Global functions for HTML onclick handlers
+function openAbout() { manager.toggleWindow('about'); }
+function openContact() { manager.toggleWindow('contact'); }
 function openJujube() { manager.toggleWindow('jujube'); }
 function openDesign() { manager.toggleWindow('design'); }
 function openIntangible() { manager.toggleWindow('intangible'); }
-function openPurple() { manager.toggleWindow('purple'); }
-function openOrange() { manager.toggleWindow('orange'); }
-function openContact() { manager.toggleWindow('wcontact'); }
+function openFont() { manager.toggleWindow('font'); }
 function openWaves() { manager.toggleWindow('wwaves'); }
 function closeAll() { manager.closeAll(); }

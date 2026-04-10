@@ -17,6 +17,11 @@
   --var-secHeading: 2rem;
   --var-secPar: ;
 }
+@media (prefers-dark-interface) { 
+  :root {
+
+  } 
+}
 /* @media (min-width: 1200px) {
   root: {
     --fs-xl: clamp(3rem, 15vw + 1rem, 6rem);
@@ -39,11 +44,6 @@
 
 body {
   font-size: 20px;
-  /* margin: 20px 0 0;
-  background-image: url("../media/images/jujujuju.svg");
-  background-repeat: no-repeat;
-  background-size: 80%;
-  background-position: center 15vh; */
   background-color: var(--col-hi2);
 }
 
@@ -367,25 +367,28 @@ footer {
   transform: translateY(-6px);
 }
 
-
+/* 
+I THINK THIS CAN BE DELETED
+=========================== */
 
 /* ===WINDOWS=== */
-.winbio, .winweb, .wincontact, .wincontent, .winmusic {
+/* .winbio, .winweb, .wincontact, .wincontent, .winmusic {
   position: absolute;
   display: none;
   font-size: 16px;
   border-radius: 10px;
-  border: solid 1px var(--col-ne1);
-}
+  border: solid 1px var(--col-ne2);
+} */
 /* Sizing */
-.wincontent {
+/* .wincontent {
   display: none;
   top: clamp(5em, 10vh, 50em);
   right: clamp(1.8em, 1vw, 5em);
   width: clamp(10em, auto, 40em);
   height: clamp(10em, auto, 20em);
   z-index: 100;
-}
+} */
+/* 
 .wincontact {
   display: none;
   top: clamp(8em, 30vh, 40em);
@@ -413,7 +416,9 @@ footer {
   width: clamp(30em, 60vw, 120em);
   height: clamp(10em, 70vh, 60em);
   z-index: 80;
-}
+} */
+
+
 .window-bar {
   position: relative;
   padding: 1px 5px;

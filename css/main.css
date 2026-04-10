@@ -161,20 +161,20 @@ h1 {
 .intangible .iimg {
   width: 100%;
 }
-.orange {
+.font {
   display: none;
   background: whitesmoke;
   top: 100px;
   left: 200px;
 }
-.purple {
+.about {
   display: none;
   background: #99F;
   top: 200px;
   left: 100px;
   height: 500px; width: 450px;
 }
-.wcontact {
+.contact {
   display: none;
   background: rgb(119, 142, 255);
   top: 100px;
