@@ -25,29 +25,24 @@ function setup() {
     
     createBuffer();
     createUI();
-    
+
     noLoop();
-    
-    // Set up global key handler for undo
     setupUndoKeyHandler();
 }
 
 function setupUndoKeyHandler() {
-    // Track when Meta/Ctrl are pressed/released
+    // Track when Cmd/Ctrl are pressed/released
     window.addEventListener('keydown', function(e) {
-        
         if (e.key === 'Meta' || e.code === 'MetaLeft' || e.code === 'MetaRight') {
             metaKeyDown = true;
         }
         if (e.key === 'Control' || e.code === 'ControlLeft' || e.code === 'ControlRight') {
             ctrlKeyDown = true;
         }
-        
-        // Check for Z while meta/ctrl is held
+        // Check for Z while Cmd/ctrl is held
         if ((e.key === 'z' || e.key === 'Z') && (metaKeyDown || ctrlKeyDown || e.metaKey || e.ctrlKey)) {
             e.preventDefault();
             e.stopPropagation();
-            
             let now = Date.now();
             if (now - lastUndoTime >= UNDO_COOLDOWN) {
                 lastUndoTime = now;
@@ -56,9 +51,7 @@ function setupUndoKeyHandler() {
             return false;
         }
     }, true);
-    
     window.addEventListener('keyup', function(e) {
-        
         if (e.key === 'Meta' || e.code === 'MetaLeft' || e.code === 'MetaRight') {
             metaKeyDown = false;
         }

@@ -1,0 +1,32 @@
+@media (max-width: 1200px) {
+  :root {
+    --h1: 2.2em;
+    --b1: 16px;
+    --b2: 12px;
+  }
+    /* WINDOWS */
+    ._body {
+        padding: 2em 2.5em;
+        /* width: calc(100%);
+        height: calc(100% - 2em); */
+    }
+    .font, .about, .contact, .wwaves, .jujube, .design, .intangible {
+        top: 0;
+        left: 0;
+        height: 100vh; width: 100vw;
+    }
+    .resizer {
+        width: 20px; height: 20px;
+        border-radius: 10px;
+    }
+    .resizer.close {
+        top: 10px;
+        left: 10px;
+    }
+}
+/* 
+@media (prefers-dark-interface) { 
+  :root {
+
+  } 
+} */

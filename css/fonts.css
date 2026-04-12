@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'dindong';
+    src: url('../media/fonts/DINdong.woff') format('woff2'),
+         url('../media/fonts/DINdong.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
