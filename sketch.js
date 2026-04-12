@@ -200,7 +200,7 @@ function createUI() {
         undo();
     });
     
-    let clearBtn = createButton('🗑 Clear');
+    let clearBtn = createButton('❌ Clear');
     clearBtn.addClass('btn-clear');
     clearBtn.parent(btnContainer);
     clearBtn.mousePressed((e) => {

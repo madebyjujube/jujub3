@@ -44,9 +44,11 @@ p {
 a {
   color: #FF0;
 }
+
 a:hover {
   color: #A6F;
 }
+
 
 /* p5JS */
 .p5iframe{
@@ -159,16 +161,12 @@ h1 {
   background: rgb(255, 153, 240);
   top: 200px;
   left: 400px;
-  height: 500px; width: 600px;
+  height: 600px; width: 800px;
 }
 .intangible a {
   font-family: var(--ff-heading);
 }
-.newtablink {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-}
+
 .newtabicon {
   fill: none;
   stroke: #FF0;
